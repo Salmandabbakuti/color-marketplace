@@ -15,10 +15,10 @@ task("accounts", "Prints the list of accounts", async () => {
 });
 
 task("deploy", "Deploys Contract", async () => {
-  const contract = await ethers.getContractFactory("dMarket");
-  const dMarketContract = await contract.deploy();
-  await dMarketContract.deployed();
-  console.log("dMarket contract deployed to:", dMarketContract.address);
+  const contract = await ethers.getContractFactory("ColorToken");
+  const ColorTokenContract = await contract.deploy();
+  await ColorTokenContract.deployed();
+  console.log("ColorToken contract deployed to:", ColorTokenContract.address);
 });
 
 task("balance", "Prints an account's balance")

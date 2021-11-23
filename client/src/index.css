@@ -7,6 +7,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 10px;
+}
+
+.token {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 20px;
+  margin: 50px auto auto;
+  transition: all .2s;
+  box-shadow: 5px 5px 15px rgb(0 0 0 / 30%);
+}
+.token:hover {
+  box-shadow: 5px 5px 15px rgb(0 0 0 / 50%);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
