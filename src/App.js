@@ -57,6 +57,7 @@ function App() {
   };
 
   const mintColor = async (colorValue) => {
+    if (!colorValue) return;
     console.log('mintColor:', colorValue);
     contract.mintColor(colorValue).then((tx) => {
       tx.wait().then(() => {
