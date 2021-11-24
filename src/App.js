@@ -24,7 +24,7 @@ function App() {
       console.log('chainId:', chainId);
       if (chainId !== 3) reject('Wrong network. Please switch to Ropsten Test network');
       const signer = provider.getSigner();
-      const contract = new Contract('0x3e043ccb3970A97eD8115aD40A26686cF4424F0b', abi, signer);
+      const contract = new Contract('0xe6678508Ca804Bc011672937e756692c89788D6a', abi, signer);
       resolve({ contract });
     });
   }
@@ -33,9 +33,6 @@ function App() {
     initWeb3().then(async ({ contract }) => {
       setContract(contract);
       const colors = await contract.getAllColors();
-      console.log('colors:', colors);
-      // const newColors = colors.map(({ tokenId, colorValue, owner }) => ({ tokenId: tokenId.toString(), colorValue, owner }));
-      // console.log('colors:', newColors);
       setColors(colors);
     }).catch((err) => {
       console.log('err:', err);
@@ -45,14 +42,11 @@ function App() {
 
   const getMyColors = async () => {
     const myColors = await contract.getMyColors();
-    console.log('myColors:', myColors);
     setColors(myColors);
   };
 
   const getAllColors = async () => {
     const colors = await contract.getAllColors();
-    // const newColors = colors.map(({ tokenId, colorValue, owner }) => ({ tokenId: tokenId.toString(), colorValue, owner }));
-    console.log('all colors:', colors);
     setColors(colors);
   };
 
@@ -74,7 +68,7 @@ function App() {
         <h1 className="App-title">Color Marketplace</h1>
         <form>
           <h4 style={{ color: 'black', textAlign: 'center' }}>Mint a new color</h4>
-          <TextField placeholder="Enter color value. ie #b3ffcc" type="color" onChange={(e) => setColorInput(e.target.value)}></TextField>
+          <TextField type="color" onChange={(e) => setColorInput(e.target.value)}></TextField>
           <Button variant="contained" color="primary" onClick={() => mintColor(colorInput)}>Mint</Button>
         </form>
         <div>
@@ -84,7 +78,7 @@ function App() {
         <div className="container text-center">
           {colors.length ? colors.map(({ tokenId, colorValue, owner }, i) => (
             <div key={i} className="token" style={{ backgroundColor: colorValue }}>
-              <Tooltip title={<><em>TokenId: {tokenId.toString()}<br></br> Token Owner: {owner}</em></>}>
+              <Tooltip title={<><em>TokenId: {tokenId.toString()}<br></br>Owner: {owner}</em></>} arrow>
                 <div>{colorValue}</div>
               </Tooltip>
             </div>
