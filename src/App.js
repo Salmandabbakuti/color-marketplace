@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Button, TextField, Tooltip } from '@material-ui/core';
 import { ethers, Contract } from 'ethers';
 import Web3Modal from "web3modal";
-import ethLogo from './ethLogo.svg';
 import './App.css';
 import { abi } from './artifacts/contracts/ColorToken.sol/ColorToken.json';
 
@@ -64,10 +63,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={ethLogo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Color Marketplace</h1>
+        <h1 className="marketplace-title">Color Marketplace</h1>
         <form>
-          <h4 style={{ color: 'black', textAlign: 'center' }}>Mint a new color</h4>
+          <h4 >Mint a new color</h4>
           <TextField type="color" onChange={(e) => setColorInput(e.target.value)}></TextField>
           <Button variant="contained" color="primary" onClick={() => mintColor(colorInput)}>Mint</Button>
         </form>
