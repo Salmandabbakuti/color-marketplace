@@ -70,8 +70,8 @@ function App() {
           <Button variant="contained" color="primary" onClick={() => mintColor(colorInput)}>Mint</Button>
         </form>
         <div>
-          <Button variant="contained" color="secondary" onClick={getMyColors}>Get My Colors</Button>
-          <Button variant="contained" color="primary" onClick={getAllColors}>Get All Colors</Button>
+          <Button variant="contained" color="secondary" onClick={getMyColors}>My Colors</Button>
+          <Button variant="contained" color="primary" onClick={getAllColors}>All Colors</Button>
         </div>
         <div className="container text-center">
           {colors.length ? colors.map(({ tokenId, colorValue, owner }, i) => (
@@ -80,7 +80,6 @@ function App() {
                 <div>{colorValue}</div>
               </Tooltip>
             </div>
-
           )) :
             <p>No items in the Market.!</p>
           }
