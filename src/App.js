@@ -10,9 +10,26 @@ function App() {
   const [colors, setColors] = useState([]);
   const [colorInput, setColorInput] = useState('');
   const [logMessage, setLogMessage] = useState('');
+  const [provider, setProvider] = useState(null);
+
+  // listen for provider events
+  useEffect(() => {
+    if (window?.ethereum) {
+      console.log('provider', window?.ethereum);
+      window?.ethereum.on('accountsChanged', (accounts) => console.log('accountsChanged', accounts));
+      window?.ethereum.on('chainChanged', () => window.location.reload());
+      window?.ethereum.on('connect', (info) => console.log('connected to network', info));
+    }
+    return () => {
+      if (window?.ethereum) {
+        window.ethereum.removeAllListeners();
+      }
+    };
+
+  }, [provider]);
 
   const initWeb3 = async () => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const web3Modal = new Web3Modal({
         network: "ropsten",
         cacheProvider: true,
@@ -21,15 +38,22 @@ function App() {
       const provider = new ethers.providers.Web3Provider(connection);
       const { chainId } = await provider.getNetwork();
       console.log('chainId:', chainId);
-      if (chainId !== 3) reject('Wrong network. Please switch to Ropsten Test network');
+      if (chainId !== 80001) {
+        alert('Wrong network. Please switch to Polygon Test network');
+        // switch chain if not on Polygon Testnet
+        return provider.send('wallet_switchEthereumChain', [{
+          chainId: '0x13881'
+        }]);
+      }
       const signer = provider.getSigner();
-      const contract = new Contract('0xe6678508Ca804Bc011672937e756692c89788D6a', abi, signer);
-      resolve({ contract });
+      const contract = new Contract('0xB56946D84E4Dd277A8E575D5Dae551638010C6A8', abi, signer);
+      resolve({ provider, contract });
     });
-  }
+  };
 
   useEffect(() => {
-    initWeb3().then(async ({ contract }) => {
+    initWeb3().then(async ({ provider, contract }) => {
+      setProvider(provider);
       setContract(contract);
       const colors = await contract.getAllColors();
       setColors(colors);
